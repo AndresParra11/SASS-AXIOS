@@ -1,0 +1,94 @@
+//Importar tipografías
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap");
+
+//Variables SASS
+$font-heading: "DM Serif Display";
+$font-body: "Karla";
+$background-color-nav: hsl(0, 0%, 98%);
+$font-size-body: 16px;
+$color-links: hsl(273, 4%, 51%);
+$color-btns-hover: hsl(270, 9%, 17%);
+$background-color-banner: hsl(256, 26%, 20%);
+$color-font: #fff;
+
+@import "universals.scss";
+
+// Implementar Funciones
+
+@function size($proporcion) {
+  @return $proporcion * $font-size-body;
+}
+
+// Implementar Mixins
+
+@mixin paddings($proporcion) {
+  padding: $proporcion * 1px $proporcion * 4px;
+}
+
+@mixin buttons($proporcion, $background-color, $color-letter) {
+  @include paddings($proporcion);
+  @extend body;
+  background-color: $background-color;
+  color: $color-letter;
+  border: 3px solid $color-letter;
+  cursor: pointer;
+  &:hover {
+    background-color: $color-letter;
+    color: $background-color;
+  }
+}
+
+// Aplicar estilos al body
+
+body {
+  font-family: $font-body;
+  font-size: $font-size-body;
+}
+
+// Aplicar estilos al navbar
+.header {
+  &__nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @include paddings(20);
+  }
+  &__list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: size(1);
+  }
+  &__item {
+    &--mobile {
+      display: none;
+    }
+    a {
+      text-decoration: none;
+      color: $color-links;
+      font-weight: 700;
+      &:hover {
+        color: $color-btns-hover;
+      }
+    }
+
+    button {
+      @include buttons(5, $background-color-nav, $color-btns-hover);
+    }
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .header {
+    &__item {
+      display: none;
+      &--mobile {
+        display: block;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
