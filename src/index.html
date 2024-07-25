@@ -23,7 +23,52 @@
         </ul>
       </nav>
     </header>
-    <main class="main"></main>
+    <main class="main">
+      <h1>Gestion de Citas Medicas</h1>
+      <section>
+        <h2>Citas Programadas</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>nombre</th>
+              <th>fecha</th>
+              <th>hora</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="appointments-table"></tbody>
+        </table>
+      </section>
+      <section>
+        <h2>Agendar Nueva Cita</h2>
+        <form id="add-appointment-form">
+          <input
+            type="text"
+            id="patient-name"
+            placeholder="Nombre del paciente"
+            required
+          />
+          <input type="date" id="appointment-date" required />
+          <input type="time" id="appointment-time" required />
+          <button type="submit">Agendar</button>
+        </form>
+      </section>
+      <section>
+        <h2>Reprogramar cita</h2>
+        <form id="update-appointment-id">
+          <input
+            type="number"
+            id="update-appointment-id"
+            placeholder="id de la cita"
+            required
+          />
+          <input type="date" id="new-appointment-date" required />
+          <input type="time" id="new-appointment-date" required />
+          <button type="submit">Reprogramar</button>
+        </form>
+      </section>
+    </main>
     <footer class="footer">Hecho con <span>❤</span> por Front 8</footer>
   </body>
 </html>
