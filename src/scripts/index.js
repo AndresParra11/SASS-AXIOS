@@ -42,7 +42,7 @@ async function renderAppointments() {
         <td>${appointment.date}</td>
         <td>${appointment.time}</td>
         <td>
-          <button onclick = "deleteAppointment(${appointment.id})">Cancelar</button>
+          <button onclick = "deleteAppointment('${appointment.id}')">Cancelar</button>
         </td>
   `;
       tableBody.appendChild(row);
@@ -60,6 +60,51 @@ window.deleteAppointment = async (id) => {
     console.error("Error deleting appointment", e);
   }
 };
+
+// Función para agregar una nueva cita
+document
+  .getElementById("add-appointment-form")
+  .addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("patient-name").value;
+    const date = document.getElementById("appointment-date").value;
+    const time = document.getElementById("appointment-time").value;
+
+    try {
+      await axios.post(`${apiBaseURL}/appointments`, { name, date, time });
+      renderAppointments();
+      document.getElementById("add-appointment-form").reset();
+    } catch (error) {
+      console.error("Error al agregar cita", error);
+    }
+  });
+
+//Reprogramacion de cita
+
+document
+  .getElementById("update-appointment-form")
+  .addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const id = document.getElementById("update-appointment-id").value;
+    const nuevaDate = document.getElementById("new-appointment-date").value;
+    const nuevaTime = document.getElementById("new-appointment-time").value;
+
+    try {
+      const response = await axios.get(`${apiBaseURL}/appointments/${id}`);
+      const appointment = response.data;
+      await axios.put(`${apiBaseURL}/appointments/${id}`, {
+        name: appointment.name,
+        date: nuevaDate,
+        time: nuevaTime,
+      });
+      renderAppointments();
+    } catch (error) {
+      console.error("error al reprogramar", error);
+    }
+    document.getElementById("update-appointment-form").reset();
+  });
+
 // Inicializar la tabla al cargar la página
 
 document.addEventListener("DOMContentLoaded", renderAppointments);
